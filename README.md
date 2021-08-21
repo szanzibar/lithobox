@@ -17,6 +17,7 @@ In case itslitho changes their defaults, or to generate lithophanes elsewhere, h
 I use these light bulb cables. The back panel hole is adjustable to fit pretty much any cable
 - https://smile.amazon.com/gp/product/B01M5F3DA2
 
-I use these light bulbs. 
+I use these light bulbs:
+
 :warning: You must use bulbs that don't get too hot, such as LED bulbs. DO NOT USE TRADITIONAL BULBS OR THE PLA WILL MELT. :warning:
 - https://smile.amazon.com/gp/product/B082Z38DSX

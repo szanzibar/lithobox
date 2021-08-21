@@ -25,14 +25,13 @@ lipSize = 2; //[1.8:.2:10]
 backPanelHoleRadius = 18; //[1:.1:30]
 
 // Text to put on back panel
-line1 = "";
-line2 = "";
-line3 = "";
+line1 = "The";
+line2 = "Quick";
+line3 = "Brown";
 
-line4 = "";
-line5 = "";
-line6 = "";
-
+line4 = "Fox";
+line5 = "Jumped";
+line6 = "Real High";
 
 // Real constants
 
@@ -44,8 +43,8 @@ floorThickness = 5;
 innerThickness = lipSize * 2 + lithThickness;
 // innerThickness = 7
 
-pillarHeight = lithSize - lithBorderWidth*2;
-pinCorner = lithSize/2 + innerThickness/2; 
+pillarHeight = lithSize - lithBorderWidth * 2;
+pinCorner = lithSize / 2 + innerThickness / 2;
 // pinCorner = 60 + 3.5
 
 pinHeight = 5;
@@ -57,18 +56,22 @@ myPin()
     color("RoyalBlue") pin(h = pinHeight, r = pinRadius);
 }
 
-module myPinHole() {
+module
+myPinHole()
+{
     color("RoyalBlue") pinhole(h = pinHeight, r = pinRadius, tight = false);
 }
 
 module
 pillar()
 {
-    pillarPinCorner = pinCorner + innerThickness/2 - borderThickness/2;
+    pillarPinCorner = pinCorner + innerThickness / 2 - borderThickness / 2;
 
-    translate([ pillarPinCorner, pillarPinCorner, 0 ]) cube([ borderThickness, borderThickness, pillarHeight], true);
-    translate([ pinCorner, pinCorner, pillarHeight/2-1 ]) myPin();
-    translate([ pinCorner, pinCorner, -pillarHeight/2+1 ]) rotate([0,180,0]) myPin();
+    translate([ pillarPinCorner, pillarPinCorner, 0 ])
+        cube([ borderThickness, borderThickness, pillarHeight ], true);
+    translate([ pinCorner, pinCorner, pillarHeight / 2 - 1 ]) myPin();
+    translate([ pinCorner, pinCorner, -pillarHeight / 2 + 1 ])
+        rotate([ 0, 180, 0 ]) myPin();
 }
 
 module
@@ -76,49 +79,50 @@ pillarWithPanels()
 {
     difference()
     {
-        translate([0,0,-1]) pillar();
-        panels(top=true);
+        translate([ 0, 0, -1 ]) pillar();
+        panels(top = true);
     }
 }
 
-module base()
+module
+base()
 {
-    outerBaseSize = lithSize + innerThickness*2;
+    outerBaseSize = lithSize + innerThickness * 2;
     innerBaseSize = lithSize;
 
     difference()
     {
-        translate([ -outerBaseSize/2, -outerBaseSize/2, 0 ]) 
+        translate([ -outerBaseSize / 2, -outerBaseSize / 2, 0 ])
             cube([ outerBaseSize, outerBaseSize, borderThickness ], false);
-        translate([ -innerBaseSize/2, -innerBaseSize/2, floorThickness + 0.1 ])
-            cube([ lithSize, lithSize, borderThickness - floorThickness ], false);
+        translate(
+            [ -innerBaseSize / 2, -innerBaseSize / 2, floorThickness + 0.1 ])
+            cube([ lithSize, lithSize, borderThickness - floorThickness ],
+                 false);
     }
 }
 
 module topBase(height)
 {
-    outerBaseSize = lithSize + innerThickness*2;
-    stiffUpperLip = lithSize - lipSize*2;
+    outerBaseSize = lithSize + innerThickness * 2;
+    stiffUpperLip = lithSize - lipSize * 2;
 
     difference()
     {
-        translate([ -outerBaseSize/ 2, -outerBaseSize/ 2, 0 ]) 
+        translate([ -outerBaseSize / 2, -outerBaseSize / 2, 0 ])
             cube([ outerBaseSize, outerBaseSize, height ], false);
         translate([ -stiffUpperLip / 2, -stiffUpperLip / 2, -1 ])
-            cube([ stiffUpperLip, stiffUpperLip, height + floorThickness*2 ], false);
+            cube([ stiffUpperLip, stiffUpperLip, height + floorThickness * 2 ],
+                 false);
     }
-
 }
 
 module panels(bufferOn = true, top = false)
 {
     buffer = bufferOn ? 0.4 : 0;
     height = top ? lithSize : lithThickness;
-    x = lithSize/2 + innerThickness/2;
-    z = top
-        ? -lithBorderWidth
-        : borderThickness + lithThickness/2 - lithBorderWidth;
-
+    x = lithSize / 2 + innerThickness / 2;
+    z = top ? -lithBorderWidth
+            : borderThickness + lithThickness / 2 - lithBorderWidth;
 
     translate([ 0, -x, z ]) rotate([ 90, 0, 0 ]) panel(height, buffer);
     translate([ 0, x, z ]) rotate([ 90, 0, 0 ]) panel(height, buffer);
@@ -128,33 +132,34 @@ module panels(bufferOn = true, top = false)
 
 module panel(height, buffer)
 {
-    color("Plum") cube([ lithSize + buffer, height, lithThickness + buffer ], true);
+    color("Plum")
+        cube([ lithSize + buffer, height, lithThickness + buffer ], true);
 }
 
 module internalPanels(pw, ph, pd)
 {
-    translate([0,0,pd/2])
-    color("green") cube([ pw+0.4, ph+0.4, pd+0.4], true);
+    translate([ 0, 0, pd / 2 ]) color("green")
+        cube([ pw + 0.4, ph + 0.4, pd + 0.4 ], true);
 }
 
 module
 top()
 {
-    height = borderThickness-lipSize;
+    height = borderThickness - lipSize;
     pinHoleDepth = height - pinHeight;
 
     difference()
     {
         topBase(height);
-        
+
         translate([ pinCorner, pinCorner, pinHoleDepth ]) myPinHole();
         translate([ -pinCorner, pinCorner, pinHoleDepth ]) myPinHole();
-        translate([ pinCorner, -pinCorner, pinHoleDepth]) myPinHole();
-        translate([ -pinCorner, -pinCorner, pinHoleDepth]) myPinHole();
+        translate([ pinCorner, -pinCorner, pinHoleDepth ]) myPinHole();
+        translate([ -pinCorner, -pinCorner, pinHoleDepth ]) myPinHole();
 
-        panels(top=true);
+        panels(top = true);
         internalPanels(lithSize, lithSize, lithThickness + 0.4);
-    }; 
+    };
 }
 
 module
@@ -179,47 +184,81 @@ backPanel()
 {
     difference()
     {
-        cube([lithSize, lithSize, lithThickness], true);
-        cylinder(lithThickness*2, r=backPanelHoleRadius, center=true);
-        translate([0,0,lithThickness/2-0.4]) color("blue") linear_extrude(1) myText();
+        cube([ lithSize, lithSize, lithThickness ], true);
+        cylinder(lithThickness * 2, r = backPanelHoleRadius, center = true);
+        translate([ 0, 0, lithThickness / 2 - 0.4 ]) color("blue")
+            linear_extrude(1) myText();
     }
 }
 
 module
 myText()
 {
-    textOffset = (lithSize/2 - backPanelHoleRadius) /4;
+    textOffset = (lithSize / 2 - backPanelHoleRadius) / 4;
 
     fontsize = 5;
-    
-    fontname = "Microsoft Sans Serif";
-    translate([0,backPanelHoleRadius + textOffset*3,0]) text(line1, size=fontsize, halign="center", valign="center", font=fontname);
-    translate([0,backPanelHoleRadius + textOffset*2,0]) text(line2, size=fontsize, halign="center", valign="center", font=fontname);
-    translate([0,backPanelHoleRadius + textOffset,0]) text(line3, size=fontsize, halign="center", valign="center", font=fontname);
 
-    translate([0,-backPanelHoleRadius - textOffset,0]) text(line4, size=fontsize, halign="center", valign="center", font=fontname);
-    translate([0,-backPanelHoleRadius - textOffset*2,0]) text(line5, size=fontsize, halign="center", valign="center", font=fontname);
-    translate([0,-backPanelHoleRadius - textOffset*3,0]) text(line6, size=fontsize, halign="center", valign="center", font=fontname);
+    fontname = "Microsoft Sans Serif";
+    translate([ 0, backPanelHoleRadius + textOffset * 3, 0 ])
+        text(line1,
+             size = fontsize,
+             halign = "center",
+             valign = "center",
+             font = fontname);
+    translate([ 0, backPanelHoleRadius + textOffset * 2, 0 ])
+        text(line2,
+             size = fontsize,
+             halign = "center",
+             valign = "center",
+             font = fontname);
+    translate([ 0, backPanelHoleRadius + textOffset, 0 ])
+        text(line3,
+             size = fontsize,
+             halign = "center",
+             valign = "center",
+             font = fontname);
+
+    translate([ 0, -backPanelHoleRadius - textOffset, 0 ])
+        text(line4,
+             size = fontsize,
+             halign = "center",
+             valign = "center",
+             font = fontname);
+    translate([ 0, -backPanelHoleRadius - textOffset * 2, 0 ])
+        text(line5,
+             size = fontsize,
+             halign = "center",
+             valign = "center",
+             font = fontname);
+    translate([ 0, -backPanelHoleRadius - textOffset * 3, 0 ])
+        text(line6,
+             size = fontsize,
+             halign = "center",
+             valign = "center",
+             font = fontname);
 }
 
 module
 topCover()
 {
     topBase(lipSize);
-    translate([0, 0, -borderThickness + lithBorderWidth+lithThickness-1]) panels(bufferOn = false);
+    translate([ 0, 0, -borderThickness + lithBorderWidth + lithThickness - 1 ])
+        panels(bufferOn = false);
 }
 
 module
 print_part()
 {
     bottom();
-    translate([lithSize * 1.5, 0, borderThickness-lithThickness]) rotate([180,0,0]) top();  
+    translate([ lithSize * 1.5, 0, borderThickness - lithThickness ])
+        rotate([ 180, 0, 0 ]) top();
 
-    translate([0, lithSize*1.5, pinCorner + innerThickness/2]) rotate([90,180,0]) pillarWithPanels();
-    
-    translate([lithSize * 1.5, lithSize * 1.5, 0]) backPanel();
+    translate([ 0, lithSize * 1.5, pinCorner + innerThickness / 2 ])
+        rotate([ 90, 180, 0 ]) pillarWithPanels();
 
-    translate([borderThickness *3, lithSize * 1.5, 0]) topCover();
+    translate([ lithSize * 1.5, lithSize * 1.5, 0 ]) backPanel();
+
+    translate([ borderThickness * 3, lithSize * 1.5, 0 ]) topCover();
 }
 
 print_part();
