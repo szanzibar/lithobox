@@ -36,14 +36,14 @@ module pinhole(h=10, r=4, lh=3, lt=1, t=0.3, tight=true) {
   
   union() {
     pin_solid(h, r+(t/2), lh, lt);
-    cylinder(h=h+0.2, r=r);
+    cylinder(h=h+0.2, r=r, $fn=50);
     // widen the cylinder slightly
     // cylinder(h=h+0.2, r=r+(t-0.2/2));
     if (tight == false) {
-      cylinder(h=h+0.2, r=r+(t/2)+0.25);
+      cylinder(h=h+0.2, r=r+(t/2)+0.25, $fn=50);
     }
     // widen the entrance hole to make insertion easier
-    translate([0, 0, -0.1]) cylinder(h=lh/3, r2=r, r1=r+(t/2)+(lt/2));
+    translate([0, 0, -0.1]) cylinder(h=lh/3, r2=r, r1=r+(t/2)+(lt/2), $fn=50);
   }
 }
 
@@ -91,7 +91,7 @@ module pin_vertical(h=10, r=4, lh=3, lt=1) {
     
     // center cut
     translate([-r*0.5/2, -(r*2+lt*2)/2, h/4]) cube([r*0.5, r*2+lt*2, h]);
-    translate([0, 0, h/4]) cylinder(h=h+lh, r=r/2.5, $fn=20);
+    translate([0, 0, h/4]) cylinder(h=h+lh, r=r/2.5, $fn=50);
     // center curve
     // translate([0, 0, h/4]) rotate([90, 0, 0]) cylinder(h=r*2, r=r*0.5/2, center=true, $fn=20);
   
@@ -114,7 +114,7 @@ module pin_horizontal(h=10, r=4, lh=3, lt=1) {
 module pin_solid(h=10, r=4, lh=3, lt=1) {
   union() {
     // shaft
-    cylinder(h=h-lh, r=r, $fn=30);
+    cylinder(h=h-lh, r=r, $fn=50);
     // lip
     // translate([0, 0, h-lh]) cylinder(h=lh*0.25, r1=r, r2=r+(lt/2), $fn=30);
     // translate([0, 0, h-lh+lh*0.25]) cylinder(h=lh*0.25, r2=r, r1=r+(lt/2), $fn=30);
@@ -123,9 +123,9 @@ module pin_solid(h=10, r=4, lh=3, lt=1) {
     // translate([0, 0, h-lh]) cylinder(h=lh*0.50, r1=r, r2=r+(lt/2), $fn=30);
     // translate([0, 0, h-lh+lh*0.50]) cylinder(h=lh*0.50, r1=r+(lt/2), r2=r-(lt/3), $fn=30);    
 
-    translate([0, 0, h-lh]) cylinder(h=lh*0.25, r1=r, r2=r+(lt/2), $fn=30);
-    translate([0, 0, h-lh+lh*0.25]) cylinder(h=lh*0.25, r=r+(lt/2), $fn=30);    
-    translate([0, 0, h-lh+lh*0.50]) cylinder(h=lh*0.50, r1=r+(lt/2), r2=r-(lt/2), $fn=30);    
+    translate([0, 0, h-lh]) cylinder(h=lh*0.25, r1=r, r2=r+(lt/2), $fn=50);
+    translate([0, 0, h-lh+lh*0.25]) cylinder(h=lh*0.25, r=r+(lt/2), $fn=50);    
+    translate([0, 0, h-lh+lh*0.50]) cylinder(h=lh*0.50, r1=r+(lt/2), r2=r-(lt/2), $fn=50);    
 
     // translate([0, 0, h-lh]) cylinder(h=lh, r1=r+(lt/2), r2=1, $fn=30);
     // translate([0, 0, h-lh-lt/2]) cylinder(h=lt/2, r1=r, r2=r+(lt/2), $fn=30);

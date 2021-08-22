@@ -50,7 +50,7 @@ pinCorner = lithSize / 2 + innerThickness / 2;
 // pinCorner = 60 + 3.5
 
 pinHeight = 5;
-pinRadius = 2.5;
+pinRadius = 2.3;
 
 module
 myPin()
@@ -61,7 +61,7 @@ myPin()
 module
 myPinHole()
 {
-    color("RoyalBlue") pinhole(h = pinHeight, r = pinRadius, tight = false);
+    color("RoyalBlue") pinhole(h = pinHeight, r = pinRadius);
 }
 
 module
@@ -71,8 +71,8 @@ pillar()
 
     translate([ pillarPinCorner, pillarPinCorner, 0 ])
         cube([ borderThickness, borderThickness, pillarHeight ], true);
-    translate([ pinCorner, pinCorner, pillarHeight / 2 - 1 ]) myPin();
-    translate([ pinCorner, pinCorner, -pillarHeight / 2 + 1 ])
+    translate([ pinCorner, pinCorner, pillarHeight / 2]) myPin();
+    translate([ pinCorner, pinCorner, -pillarHeight / 2])
         rotate([ 0, 180, 0 ]) myPin();
 }
 
@@ -255,19 +255,19 @@ topCover()
 module
 print_part()
 {
-    bottom();
-    translate([ lithSize * 1.5, 0, borderThickness - lithThickness ])
-        rotate([ 180, 0, 0 ]) top();
-    translate([ 0, lithSize * 1.5, pinCorner + innerThickness / 2 ])
-        rotate([ 90, 180, 0 ]) pillarWithPanels();
-    translate([ lithSize * 1.5, lithSize * 1.5, 0 ]) backPanel();
-    translate([ borderThickness * 3, lithSize * 1.5, 0 ]) topCover();
+    // bottom();
+    // translate([ lithSize * 1.5, 0, borderThickness - lithThickness ])
+    //     rotate([ 180, 0, 0 ]) top();
+    // translate([ 0, lithSize * 1.5, pinCorner + innerThickness / 2 ])
+    //     rotate([ 90, 180, 0 ]) pillarWithPanels();
+    // translate([ lithSize * 1.5, lithSize * 1.5, 0 ]) backPanel();
+    // translate([ borderThickness * 3, lithSize * 1.5, 0 ]) topCover();
 
     // bottom();
     // rotate([ 180, 0, 0 ]) top();
     // for (i=[0,1,2,3]) translate([borderThickness * 2 * i + borderThickness * 4, 0, pinCorner + innerThickness / 2]) rotate([ 90, 180, 0 ]) pillarWithPanels();
     // backPanel();
-    // topCover();
+    topCover();
 }
 
 print_part();
