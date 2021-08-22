@@ -25,6 +25,8 @@ lipSize = 2; //[1.8:.2:10]
 backPanelHoleRadius = 18; //[1:.1:30]
 
 // Text to put on back panel
+showText = false;
+
 line1 = "The";
 line2 = "Quick";
 line3 = "Brown";
@@ -194,48 +196,52 @@ backPanel()
 module
 myText()
 {
-    textOffset = (lithSize / 2 - backPanelHoleRadius) / 4;
+    if (showText == true)
+    {
+        textOffset = (lithSize / 2 - backPanelHoleRadius) / 4;
 
-    fontsize = 5;
+        fontsize = 5;
 
-    fontname = "Microsoft Sans Serif";
-    translate([ 0, backPanelHoleRadius + textOffset * 3, 0 ])
-        text(line1,
-             size = fontsize,
-             halign = "center",
-             valign = "center",
-             font = fontname);
-    translate([ 0, backPanelHoleRadius + textOffset * 2, 0 ])
-        text(line2,
-             size = fontsize,
-             halign = "center",
-             valign = "center",
-             font = fontname);
-    translate([ 0, backPanelHoleRadius + textOffset, 0 ])
-        text(line3,
-             size = fontsize,
-             halign = "center",
-             valign = "center",
-             font = fontname);
+        fontname = "Microsoft Sans Serif";
+        translate([ 0, backPanelHoleRadius + textOffset * 3, 0 ])
+            text(line1,
+                size = fontsize,
+                halign = "center",
+                valign = "center",
+                font = fontname);
+        translate([ 0, backPanelHoleRadius + textOffset * 2, 0 ])
+            text(line2,
+                size = fontsize,
+                halign = "center",
+                valign = "center",
+                font = fontname);
+        translate([ 0, backPanelHoleRadius + textOffset, 0 ])
+            text(line3,
+                size = fontsize,
+                halign = "center",
+                valign = "center",
+                font = fontname);
 
-    translate([ 0, -backPanelHoleRadius - textOffset, 0 ])
-        text(line4,
-             size = fontsize,
-             halign = "center",
-             valign = "center",
-             font = fontname);
-    translate([ 0, -backPanelHoleRadius - textOffset * 2, 0 ])
-        text(line5,
-             size = fontsize,
-             halign = "center",
-             valign = "center",
-             font = fontname);
-    translate([ 0, -backPanelHoleRadius - textOffset * 3, 0 ])
-        text(line6,
-             size = fontsize,
-             halign = "center",
-             valign = "center",
-             font = fontname);
+        translate([ 0, -backPanelHoleRadius - textOffset, 0 ])
+            text(line4,
+                size = fontsize,
+                halign = "center",
+                valign = "center",
+                font = fontname);
+        translate([ 0, -backPanelHoleRadius - textOffset * 2, 0 ])
+            text(line5,
+                size = fontsize,
+                halign = "center",
+                valign = "center",
+                font = fontname);
+        translate([ 0, -backPanelHoleRadius - textOffset * 3, 0 ])
+            text(line6,
+                size = fontsize,
+                halign = "center",
+                valign = "center",
+                font = fontname);
+        
+    }
 }
 
 module
@@ -252,13 +258,16 @@ print_part()
     bottom();
     translate([ lithSize * 1.5, 0, borderThickness - lithThickness ])
         rotate([ 180, 0, 0 ]) top();
-
     translate([ 0, lithSize * 1.5, pinCorner + innerThickness / 2 ])
         rotate([ 90, 180, 0 ]) pillarWithPanels();
-
     translate([ lithSize * 1.5, lithSize * 1.5, 0 ]) backPanel();
-
     translate([ borderThickness * 3, lithSize * 1.5, 0 ]) topCover();
+
+    // bottom();
+    // rotate([ 180, 0, 0 ]) top();
+    // for (i=[0,1,2,3]) translate([borderThickness * 2 * i + borderThickness * 4, 0, pinCorner + innerThickness / 2]) rotate([ 90, 180, 0 ]) pillarWithPanels();
+    // backPanel();
+    // topCover();
 }
 
 print_part();
