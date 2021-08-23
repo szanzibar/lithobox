@@ -22,7 +22,7 @@ lithBorderWidth = 2; //[1:.2:8]
 lipSize = 2; //[1.8:.2:10]
 
 // Hole for lightbulb to fit into
-backPanelHoleRadius = 18; //[1:.1:30]
+backPanelHoleRadius = 17.5; //[1:.1:30]
 
 // Text to put on back panel
 showText = false;
@@ -61,7 +61,7 @@ myPin()
 module
 myPinHole()
 {
-    color("RoyalBlue") pinhole(h = pinHeight, r = pinRadius, tight = false);
+    color("RoyalBlue") pinhole(h = pinHeight, r = pinRadius-.075, tight = false);
 }
 
 module
@@ -71,8 +71,8 @@ pillar()
 
     translate([ pillarPinCorner, pillarPinCorner, 0 ])
         cube([ borderThickness, borderThickness, pillarHeight ], true);
-    translate([ pinCorner, pinCorner, pillarHeight / 2 -1]) myPin();
-    translate([ pinCorner, pinCorner, -pillarHeight / 2 + 1])
+    translate([ pinCorner, pinCorner, pillarHeight / 2 -1.25]) myPin();
+    translate([ pinCorner, pinCorner, -pillarHeight / 2 + 1.25])
         rotate([ 0, 180, 0 ]) myPin();
 }
 
@@ -187,7 +187,7 @@ backPanel()
     difference()
     {
         cube([ lithSize, lithSize, lithThickness ], true);
-        cylinder(lithThickness * 2, r = backPanelHoleRadius, center = true);
+        cylinder(lithThickness * 2, r = backPanelHoleRadius, center = true, $fn=50);
         translate([ 0, 0, lithThickness / 2 - 0.4 ]) color("blue")
             linear_extrude(1) myText();
     }
@@ -255,18 +255,18 @@ topCover()
 module
 print_part()
 {
-    bottom();
-    translate([ lithSize * 1.5, 0, borderThickness - lithThickness ])
-        rotate([ 180, 0, 0 ]) top();
-    translate([ 0, lithSize * 1.5, pinCorner + innerThickness / 2 ])
-        rotate([ 90, 180, 0 ]) pillarWithPanels();
-    translate([ lithSize * 1.5, lithSize * 1.5, 0 ]) backPanel();
-    translate([ borderThickness * 3, lithSize * 1.5, 0 ]) topCover();
+    // bottom();
+    // translate([ lithSize * 1.5, 0, borderThickness - lithThickness ])
+    //     rotate([ 180, 0, 0 ]) top();
+    // translate([ 0, lithSize * 1.5, pinCorner + innerThickness / 2 ])
+    //     rotate([ 90, 180, 0 ]) pillarWithPanels();
+    // translate([ lithSize * 1.5, lithSize * 1.5, 0 ]) backPanel();
+    // translate([ borderThickness * 3, lithSize * 1.5, 0 ]) topCover();
 
     // bottom();
     // rotate([ 180, 0, 0 ]) top();
     // for (i=[0,1,2,3]) translate([borderThickness * 2 * i + borderThickness * 4, 0, pinCorner + innerThickness / 2]) rotate([ 90, 180, 0 ]) pillarWithPanels();
-    // backPanel();
+    backPanel();
     // topCover();
 }
 
